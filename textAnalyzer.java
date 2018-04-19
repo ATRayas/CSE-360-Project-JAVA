@@ -143,6 +143,7 @@ public class textAnalyzer {
         int leftSpaces = 0;
         int rightSpaces = 0;
         int fullSpaces = 0;
+        int totalSpaces = 0;
 
 
         if(justification.equals("left") || justification.equals("right")) {
@@ -243,6 +244,17 @@ public class textAnalyzer {
         out_numLines = numberOfRow + (numberOfRow-1) * numberBlankLines;
         out_avrgLineLength = (double)out_avrgLineLength / numberOfRow;
 
+        if(justification.equals("left")) {
+            totalSpaces = leftSpaces;
+        } else if (justification.equals("right")) {
+            totalSpaces = rightSpaces;
+        } else if (justification.equals("full")) {
+            totalSpaces = fullSpaces;
+        } else {
+            System.out.println("Justification should be either left, right, or full!");
+            System.exit(0);
+        }
+
 
         // FIFTH: show the result
         // Please show the results of analysis by modifying the following codes
@@ -267,7 +279,7 @@ public class textAnalyzer {
     public static void main(String[] args) throws Exception {
         int numberBlankLines = Integer.parseInt(args[3]);
         int numberOfCharactersPerLine = Integer.parseInt(args[4]);
-        // analyzeText(inputPath, outputPath, justification, numberBlankLines, numberOfCharactersPerLine)
+        // analyzeText(inputPath, outputPath, justification, numberBlankLines)
         analyzeText(args[0], args[1], args[2], numberBlankLines, numberOfCharactersPerLine);
     }
 }
