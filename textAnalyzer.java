@@ -42,9 +42,11 @@ public class textAnalyzer {
         
         // check if the input or output file is a text file
     	if(rfile.isFile() && rfile.getName().endsWith(".txt")) {
-    		if(wfile.isFile() && wfile.getName().endsWith(".txt")) {
+    		// if(wfile.isFile() && wfile.getName().endsWith(".txt")) {
+            if(wfile.getName().endsWith(".txt")) {
     			;
     		} else {
+                System.out.println(wfile);
     			System.out.println("ERROR: Output file is not a text file!");
     			System.exit(0);
     		}
@@ -137,6 +139,12 @@ public class textAnalyzer {
 
         // Fourth: we write the output file given the wordMatrix and the spaceCount
 
+
+        int leftSpaces = 0;
+        int rightSpaces = 0;
+        int fullSpaces = 0;
+
+
         if(justification.equals("left") || justification.equals("right")) {
             for(int i=0; i<numberOfRow; i++) {
                 if(i!=0) {
@@ -148,6 +156,7 @@ public class textAnalyzer {
                 if(justification.equals("right") && spaceCount[i]>0) {
                     for(int k=0; k<spaceCount[i]; k++) {
                         bw.append(" ");
+                        rightSpaces ++;
                     }
                 }
                 for(int j=0; j<numberOfCharactersPerLine/2; j++) {
@@ -159,6 +168,8 @@ public class textAnalyzer {
                         out_avrgLineLength += wordMatrix[i][j].length();
                     } else {
                         bw.append(" " + wordMatrix[i][j]);
+                        leftSpaces ++;
+                        rightSpaces ++;
                         out_avrgLineLength = out_avrgLineLength + 1 + wordMatrix[i][j].length();
                     }
                 }
@@ -186,10 +197,12 @@ public class textAnalyzer {
                     tmp = spaceCount[i] / 2;
                     for(int k=0; k<tmp; k++) {
                         bw.append(" ");
+                        fullSpaces ++;
                     }
                     bw.append(wordMatrix[i][0]);
                     for(int k=0; k<spaceCount[i]-tmp; k++) {
                         bw.append(" ");
+                        fullSpaces ++;
                     }
                     out_avrgLineLength = out_avrgLineLength + wordMatrix[i][0].length() + spaceCount[i];
                 // if there are at least 2 words in this row
@@ -205,9 +218,11 @@ public class textAnalyzer {
                         } else {
                             for(int k=0; k<tmp+1; k++) {
                                 bw.append(" ");
+                                fullSpaces ++;
                             }
                             if(modulus>0) {
                                 bw.append(" ");
+                                fullSpaces ++;
                                 modulus--;
                             }
                             bw.append(wordMatrix[i][j]);
@@ -236,6 +251,16 @@ public class textAnalyzer {
         System.out.println("out_numLines: " + out_numLines);
         System.out.printf("out_avrgWordsPerLine: %.2f \n", out_avrgWordsPerLine);
 		System.out.printf("out_avrgLineLength: %.2f \n", out_avrgLineLength);
+        if(justification.equals("left")) {
+            System.out.println("numberOfTotalSpacesAdded: " + leftSpaces);
+        } else if (justification.equals("right")) {
+            System.out.println("numberOfTotalSpacesAdded: " + rightSpaces);
+        } else if (justification.equals("full")) {
+            System.out.println("numberOfTotalSpacesAdded: " + fullSpaces);
+        } else {
+            System.out.println("Justification should be either left, right, or full!");
+            System.exit(0);
+        }
     }    
 
 
