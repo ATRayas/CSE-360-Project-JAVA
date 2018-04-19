@@ -267,7 +267,7 @@ public class textAnalyzer {
     public static void main(String[] args) throws Exception {
         int numberBlankLines = Integer.parseInt(args[3]);
         int numberOfCharactersPerLine = Integer.parseInt(args[4]);
-        // analyzeText(inputPath, outputPath, justification, numberBlankLines)
+        // analyzeText(inputPath, outputPath, justification, numberBlankLines, numberOfCharactersPerLine)
         analyzeText(args[0], args[1], args[2], numberBlankLines, numberOfCharactersPerLine);
     }
 }
